@@ -1,0 +1,96 @@
+﻿@model ProyectoBAC.Models.Persona
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete</title>
+</head>
+<body>
+    <div>
+        <a asp-action="Index" class="mt-3 btn btn-sm text-decoration-underline btn-light">Regresar al listado de personas</a>
+    </div>
+    <div class='text-center pt-4 d-flex justify-content-center'>
+        <h3 class="title-bac bg-white p-3 rounded col-lg-6 ">¿Está seguro de borrar esta información?</h3>
+    </div>
+    <div class="d-flex justify-content-center align-items-center row">
+        <dl class="col-lg-6 m-3 p-3 shadow-lg rounded bg-white">
+            <div class='row mb-2'>
+                <div class="col-lg-6">
+                    <dt class="p-1 text-white border border-3 bg-label-bac">
+                        @Html.DisplayNameFor(model => model.Id)
+                    </dt>
+                </div>
+                <dd class="col-lg-6">
+                    @Html.DisplayFor(model => model.Id)
+                </dd>
+            </div>
+            <div class='row mb-2'>
+                <div class="col-lg-6">
+                    <dt class="p-1 text-white border border-3 bg-label-bac">
+                        Nombre Completo
+                    </dt>
+                </div>
+                <dd class="col-lg-6">
+                    @Html.DisplayFor(model => model.FullName)
+                </dd>
+            </div>
+            <div class='row mb-2'>
+                <div class="col-lg-6">
+                    <dt class="p-1 text-white border border-3 bg-label-bac">
+                        Tel. Casa
+                    </dt>
+                </div>
+                <dd class="col-lg-6">
+                    @Html.DisplayFor(model => model.HomePhone)
+                </dd>
+            </div>
+            <div class='row mb-2'>
+                <div class="col-lg-6">
+                    <dt class="p-1 text-white border border-3 bg-label-bac">
+                        Celular
+                    </dt>
+                </div>
+                <dd class="col-lg-6">
+                    @Html.DisplayFor(model => model.CellPhone)
+                </dd>
+            </div>
+            <div class='row mb-2'>
+                <div class="col-lg-6">
+                    <dt class="p-1 text-white border border-3 bg-label-bac">
+                        Año de nacimiento
+                    </dt>
+                </div>
+                <dd class="col-lg-6">
+                    @Html.DisplayFor(model => model.BirthYear)
+                </dd>
+            </div>
+            <div class='row mb-2'>
+                <div class="col-lg-6">
+                    <dt class="p-1 text-white border border-3 bg-label-bac">
+                        Creado
+                    </dt>
+                </div>
+                <dd class="col-lg-6">
+                    @Html.DisplayFor(model => model.CreatedAt)
+                </dd>
+            </div>
+        </dl>
+
+        @using (Html.BeginForm("DeleteConfirmed", "Person", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.Id)
+
+            <div class='d-flex justify-content-center'>
+                <input type="submit" value="Borrar" class="btn btn-danger" />
+            </div>
+        
+        }
+    </div>
+</body>
+</html>

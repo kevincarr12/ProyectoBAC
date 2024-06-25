@@ -1,0 +1,269 @@
+﻿@model ProyectoBAC.Models.Persona
+
+@{
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<body>
+    <div>
+        <a asp-action="Index" class="mt-3 btn btn-sm text-decoration-underline btn-light">Regresar al listado de personas</a>
+    </div>
+    <div class='text-center pt-4 d-flex justify-content-center'>
+        <h1 class="title-bac bg-white p-3 rounded col-lg-6 ">Registro|BAC</h1>
+    </div>
+
+
+<div class="d-flex justify-content-center align-items-center row">
+        <form asp-action="Create" id="personForm" class='col-lg-6 m-3 p-3 shadow-lg rounded' >
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class='row mb-2'>
+            <div class='col-lg-4'>
+                <label asp-for="FullName" class='form-label p-1 text-white border border-3 bg-label-bac'><b>Nombre Completo</b></label>
+            </div>
+            <div class='col-lg-8'>
+                <input           
+                    required
+                    type="text"
+                    asp-for="FullName"
+                    id='FullName'
+                    placeholder='Nombre Completo'
+                    class='form-control' 
+                />
+                <span asp-validation-for="FullName" id="error-message-fullName" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class='row mb-2'>
+            <div class='col-lg-4'>
+                <label asp-for="HomePhone" class='form-label p-1 text-white border border-3 bg-label-bac'><b>Tel. Hogar</b></label>
+            </div>
+            <div class='col-lg-8'>
+                <input          
+                    required
+                    maxLength=8
+                    minLength=8
+                    type="text"
+                    asp-for="HomePhone"
+                    id='HomePhone'
+                    placeholder='Telefono Hogar'
+                    class='form-control' 
+                />
+                    <span asp-validation-for="HomePhone" id="error-message-phoneHome" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class='row mb-2'>
+            <div class='col-lg-4'>
+                <label asp-for="CellPhone" class='form-label p-1 text-white border border-3 bg-label-bac'><b>Celular</b></label>
+            </div>
+            <div class='col-lg-8'>
+                <input          
+                    required
+                    maxLength=8
+                    minLength=8
+                    type="text"
+                    asp-for="CellPhone"
+                    id='CellPhone'
+                    placeholder='Celular'
+                    class='form-control' 
+                />
+                    <span asp-validation-for="CellPhone" id="error-message-cellphone" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class='row mb-2'>
+            <div class='col-lg-4'>
+                <label asp-for="BirthYear" class='form-label p-1 text-white border border-3 bg-label-bac'><b>Año de nacimiento</b></label>
+            </div>
+            <div class='col-lg-8'>
+                <input          
+                    required
+                    type="date"
+                    asp-for="BirthYear"
+                    id="BirthYear"
+                    placeholder='Año de Nacimiento'
+                    class='form-control' 
+                />
+                    <span asp-validation-for="BirthYear" id="error-message-birthYear" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class='d-flex justify-content-center'>
+            <input type="submit" value="Registrar" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('personForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                if (
+                        verifyFullName() &&
+                        verifyHomePhone() &&
+                        verifyCellPhone() &&
+                        verifyBirthYear()
+                ) {
+                    var fullName = document.getElementById('FullName').value;
+
+                    var confirmMsg = `¿Está seguro de modificar la información de ${fullName}?`;
+
+                    if (confirm(confirmMsg)) {
+                        this.submit();
+                    }
+                } else {
+                    alert('Por favor complete la información de manera correcta')
+                }
+            })
+
+            document.getElementById('FullName').addEventListener('input', function () {
+                verifyFullName()
+            });
+
+            document.getElementById('HomePhone').addEventListener('input', function () {
+                verifyHomePhone()
+            });
+
+            document.getElementById('CellPhone').addEventListener('input', function () {
+                verifyCellPhone()
+            });
+
+            document.getElementById('BirthYear').addEventListener('input', function () {
+                verifyBirthYear()
+            });
+
+            document.getElementById('BirthYear').addEventListener('change', function () {
+                verifyBirthYear()
+            });
+
+            document.getElementById('BirthYear').addEventListener('click', function () {
+                verifyBirthYear()
+            });
+
+            document.getElementById('BirthYear').addEventListener('focus', function () {
+                verifyBirthYear()
+            });
+
+            document.getElementById('BirthYear').addEventListener('blur', function () {
+                verifyBirthYear()
+            });
+
+        })
+
+        function verifyFullName() {
+            var textInput = document.getElementById('FullName');
+            var value = textInput.value;
+            var errorMessage = document.getElementById('error-message-fullName');
+
+            const regex = /^[a-zA-Z\s]*$/;
+
+            errorMessage.textContent = '';
+
+            if (!regex.test(value)) {
+                if (value.length > 0) {
+                    textInput.value = value.slice(0, -1);
+                }
+                errorMessage.textContent = 'Solo puede ingresar letras mayusculas, minusculas y espacios';
+            } else {
+                return true
+            }
+
+            return false
+        }
+
+        function verifyHomePhone() {
+            var textInput = document.getElementById('HomePhone');
+            var value = textInput.value;
+            var errorMessage = document.getElementById('error-message-phoneHome');
+
+            const regex = /^2\d{0,7}$/;
+
+            errorMessage.textContent = '';
+
+            if (!regex.test(value)) {
+                if (value.length > 0) {
+                    textInput.value = value.slice(0, -1);
+                }
+                errorMessage.textContent = 'Debe empezar con 2 e ingresar 8 digitos';
+            } else {
+                return true
+            }
+
+            return false
+        }
+
+        function verifyCellPhone() {
+            var textInput = document.getElementById('CellPhone');
+            var value = textInput.value;
+            var errorMessage = document.getElementById('error-message-cellphone');
+
+            const regex = /^[389]\d{0,7}$/;
+
+            errorMessage.textContent = '';
+
+            if (!regex.test(value)) {
+                if (value.length > 0) {
+                    textInput.value = value.slice(0, -1);
+                }
+                errorMessage.textContent = 'Debe empezar con 3, 8 o 9 e ingresar 8 digitos';
+            } else {
+                return true
+            }
+
+            return false
+        }
+
+        function verifyBirthYear() {
+            var textInput = document.getElementById('BirthYear');
+            var value = calcularEdad(textInput.value);
+            var errorMessage = document.getElementById('error-message-birthYear');
+
+            errorMessage.textContent = '';
+
+            if (!(value >= 18 && value <= 65)) {
+                errorMessage.textContent = 'Debe tener una edad entre 18 y 65 años';
+            } else {
+                return true
+            }
+
+            return false
+        }
+
+        function calcularEdad(fechaNacimiento) {
+            const fechaNacimientoDate = new Date(fechaNacimiento);
+
+            const fechaActual = new Date();
+
+            let edad = fechaActual.getFullYear() - fechaNacimientoDate.getFullYear();
+
+            const mesActual = fechaActual.getMonth();
+            const diaActual = fechaActual.getDate();
+            const mesNacimiento = fechaNacimientoDate.getMonth();
+            const diaNacimiento = fechaNacimientoDate.getDate();
+
+            if (
+                mesActual < mesNacimiento ||
+                (mesActual === mesNacimiento && diaActual < diaNacimiento)
+            ) {
+                edad--;
+            }
+
+            return edad--
+        }
+    </script>
+}
+</body>
+</html>

@@ -1,0 +1,86 @@
+﻿@model IEnumerable<ProyectoBAC.Models.Persona>
+
+@{
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div class='text-center pt-4 d-flex justify-content-center'>
+        <h1 class="title-bac bg-white p-3 rounded col-lg-6 ">Listado de Personas</h1>
+    </div>
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Registrar Persona</a>
+    </p>
+
+    @if (Model.Any())
+    {
+        <table class="table bg-white rounded">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Id)
+                    </th>
+                    <th>
+                        Nombre Completo
+                    </th>
+                    <th>
+                        Tel. Casa
+                    </th>
+                    <th>
+                        Celular
+                    </th>
+                    <th>
+                        Año de Nacimiento
+                    </th>
+                    <th>
+                        Fecha/Hora Creación
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.HomePhone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CellPhone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BirthYear)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedAt)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Editar", "Edit", new { id=item.Id }) |
+                            @Html.ActionLink("Borrar", "Delete", new { id=item.Id })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <span class="p-2 mt-2 bg-secondary text-white rounded">No hay personas registradas</span>
+    }
+
+
+</body>
+</html>
